@@ -33,7 +33,7 @@ z=dryck*13.95
 
 print("Ni behöver",dryck,"drycker till eleverna")
 print("Det kommer och kosta",round(z),"kronor")
-print("Total kostnaden kommer att vara",round(vanligkorvpris+vegkorvpris+z))
+print("Total kostnaden kommer att vara",round(vanligkorvpris+vegkorvpris+z,1))
 
 
 
