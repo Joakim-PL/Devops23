@@ -2,7 +2,7 @@ import random
 
 while True:
 
-    dice=random.randint(1, 6)
+    dice = random.randint(1, 6)
 
     if dice == 1:
         print("Du slog en 1:a")
@@ -54,4 +54,4 @@ while True:
 
     spelaigen = input("Vill du spela igen (y/n): ")
     if spelaigen == 'yes':
-        break  
+        break
