@@ -1,4 +1,4 @@
-import json
+import konstigagrejen
 
 attendants = ['Åsa', 'Kalle', 'Olivia', 'Johan']
 with open('data.json', 'w') as myFile:
