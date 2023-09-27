@@ -7,15 +7,18 @@ ui_width = 40
 class RockPaperScissor:
     def __init__(self):
         self.options = ["sten", "sax", "påse"]
+        self.life = 3
 
     def clear_screen(self):  # clear terminal
-        os.system('cls' if os.name == 'nt' else 'clear')
+        if os.name == 'nt':
+            os.system('cls')
+        else:
+            os.system('clear')
 
     def spel(self):  # the game and ui
-        self.clear_screen()
-        print("\033c")  # ANSI escape-sequence to clear the screen
         print("-" * 40)
-        print("|  .:Välkommen till sten, sax, påse:.  |".center(ui_width))
+        print("|  .:Välkommen till sten, sax, påse!:.  |".center(ui_width))
+        print(f"| Du har {self.life} liv |".center(ui_width))
         print("-" * 40)
         players_choice = input("| Välj sten, sax eller påse: ").lower()
 
@@ -36,15 +39,33 @@ class RockPaperScissor:
 
         else:
             print("| Datorn vann")
+            self.life -= 1  # The player loses a life when computer wins
+
+        print(f"| du har {self.life} liv kvar.")
+
+        if self.life == 0:  # If the player have no lifes left the game ends
+            print("| Du har inga liv kvar. Spelet är slut.")
+            exit()
 
 
 if __name__ == "__main__":
     game = RockPaperScissor()
+    clear = RockPaperScissor()
     while True:
+        clear.clear_screen()
         game.spel()
         print("-" * 40)
-        cont = input("| Vill du spela igen (ja/nej): ").lower()
-        if cont == "ja":
-            continue
-        else:
-            break
+        cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
+
+        try:
+            if cont == "ja":
+                continue
+            elif cont == "nej":
+                break
+            else:
+                raise ValueError  # stop if the answer is not ja/nej
+
+        except ValueError:
+            print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
+
+
