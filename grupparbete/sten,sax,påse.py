@@ -7,7 +7,8 @@ ui_width = 40
 class RockPaperScissor:
     def __init__(self):
         self.options = ["sten", "sax", "påse"]
-        self.life = 3
+        self.user_score = 0  # players score
+        self.computer_score = 0  # computers score
 
     def clear_screen(self):  # clear terminal
         if os.name == 'nt':
@@ -16,11 +17,14 @@ class RockPaperScissor:
             os.system('clear')
 
     def spel(self):  # the game and ui
-        print("-" * 40)
-        print("|  .:Välkommen till sten, sax, påse!:.  |".center(ui_width))
-        print(f"| Du har {self.life} liv |".center(ui_width))
+        print("=" * 40)
+        print("|  .:Välkommen till sten, sax, påse:.  |".center(ui_width))
+        print("=" * 40)
+        print(f"| Poäng - Utmanare: {self.user_score} | Datorn: {self.computer_score} |".center(40))
+        print("| Försten till 3 vinner! |".center(ui_width))
         print("-" * 40)
         players_choice = input("| Välj sten, sax eller påse: ").lower()
+        print("-" * 40)
 
         if players_choice not in self.options:  # controll if the players choice is valid
             print("Ogiltig inmatning, Vänligen försök igen.")
@@ -36,19 +40,22 @@ class RockPaperScissor:
                 (players_choice == "sax" and computer_choice == "påse") or \
                 (players_choice == "påse" and computer_choice == "sten"):  # and, or funktion to decide who won the game
             print("| Du vann")
+            self.user_score += 1  # The player earn a point every time the player wins
 
         else:
             print("| Datorn vann")
-            self.life -= 1  # The player loses a life when computer wins
+            self.computer_score += 1  # The computer also earns points
 
-        print(f"| du har {self.life} liv kvar.")
+        if self.computer_score == 3:  # If the player have no lifes left the game ends
+            print("| Datorn vann. Spelet är slut. |")
+            exit()
 
-        if self.life == 0:  # If the player have no lifes left the game ends
-            print("| Du har inga liv kvar. Spelet är slut.")
+        elif self.user_score == 3:
+            print("| Grattis! Du vann spelet |")
             exit()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # main program
     game = RockPaperScissor()
     clear = RockPaperScissor()
     while True:
@@ -56,16 +63,13 @@ if __name__ == "__main__":
         game.spel()
         print("-" * 40)
         cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
-
-        try:
-            if cont == "ja":
-                continue
-            elif cont == "nej":
-                break
-            else:
-                raise ValueError  # stop if the answer is not ja/nej
-
-        except ValueError:
+        
+        while cont not in ["ja", "nej"]:  # Error message if ja/nej is not answered
             print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
+            cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
+
+        if cont == "nej":
+            print("| Tack att du ville spela")
+            exit()
 
 
