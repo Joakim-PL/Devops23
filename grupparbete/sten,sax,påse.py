@@ -1,6 +1,6 @@
 import random
 import os
-
+import sys
 ui_width = 40
 
 
@@ -46,14 +46,23 @@ class RockPaperScissor:
             print("| Datorn vann")
             self.computer_score += 1  # The computer also earns points
 
-        if self.computer_score == 3:  # If the player have no lifes left the game ends
-            print("| Datorn vann. Spelet är slut. |")
-            exit()
+        if self.computer_score == 3:  # the game ends if the player loses to the computer
+            clear.clear_screen()
+            print("=" * 40)
+            print("|  .:Välkommen till sten, sax, påse:.  |".center(ui_width))
+            print("=" * 40)
+            print(f"| Poäng - Utmanare: {self.user_score} | Datorn: {self.computer_score} |".center(40))
+            print("| Datorn vann. Spelet är slut. |".center(40))
+            sys.exit()
 
-        elif self.user_score == 3:
-            print("| Grattis! Du vann spelet |")
-            exit()
-
+        elif self.user_score == 3:  # the game ends if the player wins over the computer
+            clear.clear_screen()
+            print("=" * 40)
+            print("|  .:Välkommen till sten, sax, påse:.  |".center(ui_width))
+            print("=" * 40)
+            print(f"| Poäng - Utmanare: {self.user_score} | Datorn: {self.computer_score} |".center(40))
+            print("| Grattis du vann. Spelet är slut. |".center(40))
+            sys.exit()
 
 if __name__ == "__main__":  # main program
     game = RockPaperScissor()
@@ -68,8 +77,9 @@ if __name__ == "__main__":  # main program
             print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
             cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
 
-        if cont == "nej":
-            print("| Tack att du ville spela")
-            exit()
+        if cont == "nej":  # exiting the game
+            print("| Tack för att du ville spela")
+            sys.exit()
+
 
 
