@@ -1,6 +1,7 @@
 import random
 import os
 import sys
+
 ui_width = 40
 
 
@@ -64,6 +65,7 @@ class RockPaperScissor:
             print("| Grattis du vann. Spelet är slut. |".center(40))
             sys.exit()
 
+
 if __name__ == "__main__":  # main program
     game = RockPaperScissor()
     clear = RockPaperScissor()
@@ -72,7 +74,7 @@ if __name__ == "__main__":  # main program
         game.spel()
         print("-" * 40)
         cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
-        
+
         while cont not in ["ja", "nej"]:  # Error message if ja/nej is not answered
             print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
             cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
@@ -80,6 +82,3 @@ if __name__ == "__main__":  # main program
         if cont == "nej":  # exiting the game
             print("| Tack för att du ville spela")
             sys.exit()
-
-
-
