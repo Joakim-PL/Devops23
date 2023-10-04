@@ -50,7 +50,7 @@ class Kortlek:
             '2': 2, '3': 3, '4': 4, '5': 5,
             '6': 6, '7': 7, '8': 8, '9': 9,
             '10': 10, 'Kn': 11, 'D': 12,
-            'K': 13, 'E': 1  # Standardvärde för ess
+            'K': 13, 'E': 14  # Standardvärde för ess
         }
 
         while True:
