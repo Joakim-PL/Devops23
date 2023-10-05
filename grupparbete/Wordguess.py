@@ -1,30 +1,31 @@
 import random
-import sys
 import os
-
 
 class GameOrdGame:
     def __init__(self):
         pass
 
-
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def exit_game():
+    return True
 
-def avsluta_spel():
-    print("Spelet Avslutat")
-    sys.exit()
-
+def get_username():
+    if os.path.exists('username.txt'):
+        with open('username.txt', 'r') as f:
+            return f.read()
 
 def WordGuessingGame():
+
     while True:
         # Skapa en dictionary med teman och deras motsvarande ordlistor.
         themes = {
-            1: ["fläkt", "högtalare", "tangentbord", "mus", "bildskärm", "hörlurar", "musmatta", "lampa",
-                "laddstation"],
-            2: ["smör", "mjölk", "ägg", "gurka", "ketchup", "ost", "skinka", "tonfisk", "kikärtor"],
-            3: ["läppglans", "mobilladdare", "tuggummi", "hårborste", "deodorant", "strumpor", "reflex", "parfym"]
+            1: ["volvo", "ford", "kia", "honda", "toyota", "volkswagen", "mercedes", "audi", "bmw", "porsche"],
+            2: ["hund", "katt", "lejon", "elefant", "krokodil", "häst", "orm", "björn", "varg" "älg" "noshörning"],
+            3: ["äpple", "banan", "päron", "melon", "kiwi", "persika", "mandarin", "apelsin" "vindruvor"],
+            4: ["paris", "london", "tokyo", "rom", "sydney", "istanbul", "dubai", "stockholm", "oslo", "köpenhamn"],
+            5: ["fotboll", "basket", "tennis", "golf", "volleyboll", "baseboll", "mma", "hockey", "paddel", "klättring"]
         }
 
         # Skriv ut menyn.
@@ -33,15 +34,19 @@ def WordGuessingGame():
         print("║──────────────────────║")
         print("║      Välj Tema       ║")
         print("║                      ║")
-        print("║1 Martins Skrivbord   ║")
-        print("║2 Martins Kylskåp     ║")
-        print("║3 Elenas Handväska    ║")
+        print("║1 Bilmärken           ║")
+        print("║2 Djur                ║")
+        print("║3 Frukter             ║")
+        print("║4 Städer              ║")
+        print("║5 Sporter             ║")
         print("║──────────────────────║")
         print("║e Avsluta Spel        ║")
         print("╚" + "═" * 22 + "╝")
 
+
         # Be spelaren att välja ett menyalternativ.
         selected_theme = input("Välj tema > ")
+
 
         # Kontrollera om valt tema är giltigt.
         try:
@@ -51,9 +56,8 @@ def WordGuessingGame():
                 continue
 
         except ValueError:
-            # Om användaren trycker på "e", avsluta spelet.
-            if selected_theme == "e":
-                avsluta_spel()
+            if selected_theme == "e" or 'E':
+                break
             print("Välj ett giltigt tema (1, 2, eller 3).")
             continue
 
@@ -102,18 +106,21 @@ def WordGuessingGame():
             # Om spelaren har förbrukat alla sina gissningar, avsluta spelet.
             if len(guessed_letters) == max_guesses:
                 clear_terminal()
-                print("\U0001f627", "Du förlorade!", "\U0001f627" "\nDet rätta ordet var", word)
+                print("\U0001f627", "Du förlorade!","\U0001f627" "\nDet rätta ordet var", word)
                 break
 
         # Fråga användaren om de vill spela igen eller avsluta.
         print("════════════════════════════════")
         play_again = input("Vill du spela igen? (ja/nej): ")
         if play_again == "ja":
+            clear_terminal()
             continue
+
+
         elif play_again == "nej":
+            exit_game()
             break
 
 
 if __name__ == "__main__":
-    # Skapa ett objekt av GameGo-klassen och anropa metoden för att spela spelet.
     game = WordGuessingGame()

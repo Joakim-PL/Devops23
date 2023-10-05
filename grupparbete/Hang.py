@@ -1,3 +1,4 @@
+#Hang
 import random
 import os
 
@@ -109,6 +110,16 @@ class HangmanGame:
             self.done = True
             return True
         return False
+# *************************************************
+# FUNKTION FOR EXIT TILLBAKA TILL HUVUDMENY
+def exit_game():
+    return True
+# *************************************************
+
+def get_username():
+    if os.path.exists('username.txt'):
+        with open('username.txt', 'r') as f:
+            return f.read()
 
 # The main game loop
 def main():
@@ -116,15 +127,44 @@ def main():
     game = HangmanGame(wordlist2_filename)
 
     while not game.is_game_over():
+            # TEST AV VÄLKOMNANDE: ***
+        print(f"VÄLKOMMEN {get_username()}")
         print(game.display_word())
         print(game.display_hangman())  # Display the hangman figure
         guess = input(f"Allowed errors left: {game.errors_allowed}, Guess a letter: ")
-        game.make_guess(guess)
+            # original-position.
+            # game.make_guess(guess)
+            # NY KOD
+            # ***************************
+        if guess.lower() == 'exit':
+            avsluta = input("Exit game (yes/no)? ")
+            if avsluta.lower() == 'yes':
+                if exit_game():
+                    return
+        else:
+                # NY POSITION FÖR ATT SPELAREN INTE SKA FÖRLORA GISSNINGAR MID-GAME.
+            game.make_guess(guess)
+            continue
+            # ****************************
+
 
     if all(letter.lower() in game.guesses for letter in game.word):
         print(f"You found the word! It was '{game.word}'!")
+            # *****
+
     else:
         print(f"Game over! The word was '{game.word}'!")
+
+            # **********************************************************************
+            # KOD FÖR ATT LÅTA SPELAREN VÄLJA ATT SPELA IGEN OCH ÅTERGÅ TILL BÖRJAN ELLER AVSLUTA TILL HUVUDMENY. ***
+        play_again = input("Play again (yes/no)? ")
+        if play_again == 'yes':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            return main()
+        while play_again == 'no':
+            break
+        # **********************************************************************
+
 
 if __name__ == "__main__":
     main()

@@ -1,15 +1,27 @@
 import random
 import os
-
+import sys
 
 ui_width = 40
 
+# FUNKTION FÖR VÄLKOMNANDE *******
+def get_username():
+    if os.path.exists('username.txt'):
+        with open('username.txt', 'r') as f:
+            return f.read()
+# *********************************
 
 class RockPaperScissor:
+
     def __init__(self):
         self.options = ["sten", "sax", "påse"]
         self.user_score = 0  # players score
         self.computer_score = 0  # computers score
+
+    def play(self):
+        while True:
+            self.clear_screen()
+            self.spel()
 
     def clear_screen(self):  # clear terminal
         if os.name == 'nt':
@@ -17,9 +29,14 @@ class RockPaperScissor:
         else:
             os.system('clear')
 
+    # EXIT FUNKTION *********
+    def exit_game(self):
+        return True
+    # ************************
+
     def spel(self):  # the game and ui
         print("=" * 40)
-        print("|  .:Välkommen till sten, sax, påse:.  |".center(ui_width))
+        print(f"|  .:Välkommen {get_username()} till sten, sax, påse:.  |".center(ui_width))
         print("=" * 40)
         print(f"| Poäng - Utmanare: {self.user_score} | Datorn: {self.computer_score} |".center(40))
         print("| Försten till 3 vinner! |".center(ui_width))
@@ -48,48 +65,54 @@ class RockPaperScissor:
             self.computer_score += 1  # The computer also earns points
 
         if self.computer_score == 3:  # the game ends if the player loses to the computer
-            clear.clear_screen()
+            self.clear_screen()
             print("=" * 40)
             print("|  .:Välkommen till sten, sax, påse:.  |".center(ui_width))
             print("=" * 40)
             print(f"| Poäng - Utmanare: {self.user_score} | Datorn: {self.computer_score} |".center(40))
             print("| Datorn vann. Spelet är slut. |".center(40))
 
-            while True:
-                cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
-
-                while cont not in ["ja", "nej"]:  # Error message if ja/nej is not answered
-                    print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
-                    cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
-
-                if cont == "nej":  # exiting the game
-                    print("| Tack för att du ville spela")
-                    break
-
         elif self.user_score == 3:  # the game ends if the player wins over the computer
-            clear.clear_screen()
+            self.clear_screen()
             print("=" * 40)
             print("|  .:Välkommen till sten, sax, påse:.  |".center(ui_width))
             print("=" * 40)
             print(f"| Poäng - Utmanare: {self.user_score} | Datorn: {self.computer_score} |".center(40))
             print("| Grattis du vann. Spelet är slut. |".center(40))
-            while True:
-
-                cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
-
-                while cont not in ["ja", "nej"]:  # Error message if ja/nej is not answered
-                    print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
-                    cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
-
-                if cont == "nej":  # exiting the game
-                    print("| Tack för att du ville spela")
-                    break
 
 
 if __name__ == "__main__":  # main program
     game = RockPaperScissor()
-    clear = RockPaperScissor()
     while True:
-        clear.clear_screen()
+
+        game.clear_screen()
         game.spel()
         print("-" * 40)
+        if game.user_score == 3:
+            cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
+
+            while cont not in ["ja", "nej"]:  # Error message if ja/nej is not answered
+                print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
+                cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
+
+            if cont == "nej":  # exiting the game
+                if game.exit_game():
+                    # print("| Tack för att du ville spela") *********
+                    print("| Tack för att du ville spela")
+                    break
+
+        elif game.computer_score == 3:
+            cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
+
+            while cont not in ["ja", "nej"]:  # Error message if ja/nej is not answered
+                print("| Ogiltig inmatning. Vänligen svara med 'ja' eller 'nej'.")
+                cont = input("| Vill du spela igen (ja/nej): ").strip().lower()
+
+            if cont == "nej":  # exiting the game
+                if game.exit_game():
+                    # print("| Tack för att du ville spela") *********
+                    print("| Tack för att du ville spela")
+                    break
+
+
+
