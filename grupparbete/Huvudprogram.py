@@ -43,6 +43,7 @@ def print_menu():
 
 # test av inmatning av namn:
 def main():
+    while True:
         #clear_terminal()
         print_menu()
         game_choice = input("Val: ")
@@ -66,7 +67,7 @@ def main():
             Hang.main()
         elif game_choice == "5":
             print("Tack för du ville spela.")
-
+            break
 
 
 if __name__ == "__main__":
